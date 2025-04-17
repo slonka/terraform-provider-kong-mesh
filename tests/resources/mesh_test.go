@@ -65,8 +65,6 @@ func mesh(providerName, resourceName, meshName string) string {
     return fmt.Sprintf(`resource "%s_mesh" "%s" {
   type  = "Mesh"
   name  = "%s"
-
-  skip_creating_initial_policies = [ "*" ]
 }
 `, providerName, resourceName, meshName)
 }
