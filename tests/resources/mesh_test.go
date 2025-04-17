@@ -1,19 +1,19 @@
 package tests
 
 import (
-    "context"
     "fmt"
     "github.com/hashicorp/terraform-plugin-testing/plancheck"
     "github.com/stretchr/testify/require"
     "github.com/testcontainers/testcontainers-go"
     "github.com/testcontainers/testcontainers-go/wait"
+    "io"
     "testing"
 
     "github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
 func TestMesh(t *testing.T) {
-    ctx := context.Background()
+    ctx := t.Context()
     req := testcontainers.ContainerRequest{
         Image:        "kong/kuma-cp:2.10.1",
         ExposedPorts: []string{"5681/tcp"},
@@ -59,6 +59,13 @@ func TestMesh(t *testing.T) {
             },
         })
     })
+
+    logs, err := cpContainer.Logs(ctx)
+    require.NoError(t, err)
+    defer logs.Close()
+    logContent, err := io.ReadAll(logs)
+    require.NoError(t, err)
+    t.Logf("Container logs: %s", logContent)
 }
 
 func mesh(providerName, resourceName, meshName string) string {
