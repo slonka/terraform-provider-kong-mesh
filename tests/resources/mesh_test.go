@@ -20,6 +20,7 @@ func TestMesh(t *testing.T) {
         WaitingFor: wait.ForAll(
             wait.ForLog("default AccessRoleBinding created"),
             wait.ForLog("default AccessRole created"),
+            wait.ForLog("saving generated Admin User Token"),
             wait.ForListeningPort("5681/tcp"),
         ),
         Cmd: []string{"run"},
@@ -78,6 +79,8 @@ func mesh(providerName, resourceName, meshName string) string {
     return fmt.Sprintf(`resource "%s_mesh" "%s" {
   type  = "Mesh"
   name  = "%s"
+
+  skip_creating_initial_policies = [ "*" ]
 }
 `, providerName, resourceName, meshName)
 }
