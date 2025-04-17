@@ -37,4 +37,4 @@ dev/use-local-shared-speakeasy:
 	go mod tidy
 
 acceptance:
-	@TF_ACC=1 go test -v ./tests/resources
+	@TF_ACC=1 go test -count=1 -v ./tests/resources
