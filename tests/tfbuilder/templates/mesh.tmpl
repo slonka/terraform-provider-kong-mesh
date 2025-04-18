@@ -5,7 +5,9 @@ resource "{{.Provider}}_mesh" "{{.ResourceName}}" {
   {{- end }}
   type  = "Mesh"
   name  = "{{.MeshName}}"
-  depends_on = []
+  {{- if .DependsOn }}
+  depends_on = [{{range $i, $v := .DependsOn}}{{if $i}}, {{end}}{{$v}}{{end}}]
+  {{- end }}
 
   {{.Spec}}
 }

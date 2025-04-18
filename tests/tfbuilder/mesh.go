@@ -9,6 +9,7 @@ import (
 type MeshBuilder struct {
 	ResourceName string
 	MeshName     string
+	DependsOn    []string
 	Spec         string
 	CPID         string // Optional
 }
@@ -35,6 +36,7 @@ func (m *MeshBuilder) Render(provider ProviderType) string {
 		"Provider":     provider,
 		"ResourceName": m.ResourceName,
 		"MeshName":     m.MeshName,
+		"DependsOn":    m.DependsOn,
 		"Spec":         m.Spec,
 		"CPID":         m.CPID,
 	}
