@@ -1,8 +1,8 @@
 package tests
 
 import (
+	"github.com/Kong/shared-speakeasy/tfbuilder"
 	"github.com/hashicorp/terraform-plugin-testing/plancheck"
-	"github.com/kong/terraform-provider-kong-mesh/tests/tfbuilder"
 	"github.com/stretchr/testify/require"
 	"github.com/testcontainers/testcontainers-go"
 	"github.com/testcontainers/testcontainers-go/wait"
@@ -34,7 +34,8 @@ func TestMesh(t *testing.T) {
 	port, err := cpContainer.MappedPort(ctx, "5681/tcp")
 	require.NoError(t, err)
 
-	t.Skip("creates a mesh without skip_creating_initial_policies", func(t *testing.T) {
+	t.Run("creates a mesh without skip_creating_initial_policies", func(t *testing.T) {
+		t.Skip("Skipping test until https://github.com/Kong/shared-speakeasy/pull/4")
 		builder := tfbuilder.NewBuilder(tfbuilder.KongMesh, "http", "localhost", port.Int())
 		mesh := tfbuilder.NewMeshBuilder("m1", "m1")
 		builder.AddMesh(mesh)
