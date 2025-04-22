@@ -10,7 +10,7 @@ import (
 )
 
 func TestBuilder_KongMeshWithPolicy(t *testing.T) {
-	builder := tfbuilder.NewBuilder(tfbuilder.KongMesh, "http", "localhost", 5681, "")
+	builder := tfbuilder.NewBuilder(tfbuilder.KongMesh, "http", "localhost", 5681)
 
 	// Add mesh
 	builder.AddMesh(
@@ -26,19 +26,7 @@ func TestBuilder_KongMeshWithPolicy(t *testing.T) {
 			WithLabels(map[string]string{
 				"kuma.io/mesh": "kong-mesh_mesh.default.name",
 			}).
-			WithSpecHCL(`
-  spec = {
-    from = [
-      {
-        target_ref = {
-          kind = "Mesh"
-        }
-        default = {
-          action = "Allow"
-        }
-      }
-    ]
-  }`),
+			WithSpecHCL(tfbuilder.AllowAllTrafficPermissionSpec),
 	)
 
 	actual := builder.Build()

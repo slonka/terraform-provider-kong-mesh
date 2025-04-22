@@ -15,7 +15,7 @@ resource "kong-mesh_mesh_traffic_permission" "allow_all" {
   mesh     = kong-mesh_mesh.default.name
   depends_on = [kong-mesh_mesh.default]
   labels = {
-    "kuma.io/mesh" = kong-mesh_mesh.default.name
+    "kuma.io/mesh" = "kong-mesh_mesh.default.name"
   }
   type = "MeshTrafficPermission"
   name = "allow-all"

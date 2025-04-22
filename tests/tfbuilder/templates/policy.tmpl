@@ -6,7 +6,7 @@ resource "{{.Provider}}_{{.ResourceType}}" "{{.ResourceName}}" {
   {{- end }}
   labels = {
   {{- range $k, $v := .Labels }}
-    "{{ $k }}" = {{ $v }}
+    "{{ $k }}" = "{{ $v }}"
   {{- end }}
   }
   type = "{{.Type}}"

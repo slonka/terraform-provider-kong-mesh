@@ -6,6 +6,20 @@ import (
 	"text/template"
 )
 
+const AllowAllTrafficPermissionSpec = `
+  spec = {
+    from = [
+      {
+        target_ref = {
+          kind = "Mesh"
+        }
+        default = {
+          action = "Allow"
+        }
+      }
+    ]
+  }`
+
 type PolicyBuilder struct {
 	ResourceType string // e.g., "mesh_traffic_permission"
 	ResourceName string // e.g., "allow_all"

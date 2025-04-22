@@ -20,19 +20,17 @@ type Builder struct {
 	scheme        string
 	host          string
 	port          int
-	region        string
 	controlPlanes map[string]*ControlPlane
 	meshes        map[string]*MeshBuilder
 	policies      map[string]*PolicyBuilder
 }
 
-func NewBuilder(provider ProviderType, scheme, host string, port int, region string) *Builder {
+func NewBuilder(provider ProviderType, scheme, host string, port int) *Builder {
 	return &Builder{
 		provider:      provider,
 		scheme:        scheme,
 		host:          host,
 		port:          port,
-		region:        region,
 		controlPlanes: make(map[string]*ControlPlane),
 		meshes:        make(map[string]*MeshBuilder),
 		policies:      make(map[string]*PolicyBuilder),
@@ -72,7 +70,6 @@ func (b *Builder) Build() string {
 		"Scheme":   b.scheme,
 		"Host":     b.host,
 		"Port":     b.port,
-		"Region":   b.region,
 	}))
 	sb.WriteString("\n")
 
@@ -92,6 +89,10 @@ func (b *Builder) Build() string {
 	}
 
 	return sb.String()
+}
+
+func (b *Builder) ResourceAddress(resourceType, resourceName string) string {
+	return fmt.Sprintf("%s_%s.%s", b.provider, resourceType, resourceName)
 }
 
 func (b *Builder) renderTemplate(file string, data interface{}) string {
