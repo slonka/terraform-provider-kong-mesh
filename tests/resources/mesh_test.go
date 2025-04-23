@@ -1,7 +1,7 @@
 package tests
 
 import (
-	"fmt"
+	"github.com/Kong/shared-speakeasy/tfbuilder"
 	"github.com/hashicorp/terraform-plugin-testing/plancheck"
 	"github.com/stretchr/testify/require"
 	"github.com/testcontainers/testcontainers-go"
@@ -34,27 +34,83 @@ func TestMesh(t *testing.T) {
 	port, err := cpContainer.MappedPort(ctx, "5681/tcp")
 	require.NoError(t, err)
 
-	t.Run("creates a mesh", func(t *testing.T) {
-		meshName := "terraform-provider-kong-mesh"
-		meshResource := "default"
-		providerName := "kong-mesh"
+	t.Run("creates a mesh without skip_creating_initial_policies", func(t *testing.T) {
+		t.Skip("Skipping test until https://github.com/Kong/shared-speakeasy/pull/4")
+		builder := tfbuilder.NewBuilder(tfbuilder.KongMesh, "http", "localhost", port.Int())
+		mesh := tfbuilder.NewMeshBuilder("m1", "m1")
+		builder.AddMesh(mesh)
 
 		resource.Test(t, resource.TestCase{
 			ProtoV6ProviderFactories: providerFactory,
 			Steps: []resource.TestStep{
 				{
-					Config: providerConfig(port.Port()) +
-						mesh(providerName, meshResource, meshName),
+					Config: builder.Build(),
 					ConfigPlanChecks: resource.ConfigPlanChecks{
 						PreApply: []plancheck.PlanCheck{
-							plancheck.ExpectResourceAction(resourceAddress(providerName, "mesh", meshResource), plancheck.ResourceActionCreate),
+							plancheck.ExpectResourceAction(builder.ResourceAddress("mesh", mesh.ResourceName), plancheck.ResourceActionCreate),
 						},
 					},
 				},
 				{
 					// Re-apply the same config and ensure no changes occur
-					Config: providerConfig(port.Port()) +
-						mesh(providerName, meshResource, meshName),
+					Config: builder.Build(),
+					ConfigPlanChecks: resource.ConfigPlanChecks{
+						PreApply: []plancheck.PlanCheck{
+							plancheck.ExpectEmptyPlan(),
+						},
+					},
+				},
+			},
+		})
+	})
+
+	t.Run("creates a mesh with a policy", func(t *testing.T) {
+		builder := tfbuilder.NewBuilder(tfbuilder.KongMesh, "http", "localhost", port.Int())
+		mesh := tfbuilder.NewMeshBuilder("default", "terraform-provider-kong-mesh").
+			WithSpec(`skip_creating_initial_policies = [ "*" ]`)
+		mtp := tfbuilder.NewPolicyBuilder("mesh_traffic_permission", "allow_all", "allow-all", "MeshTrafficPermission").
+			WithMeshRef(builder.ResourceAddress("mesh", mesh.ResourceName) + ".name").
+			WithDependsOn(builder.ResourceAddress("mesh", mesh.ResourceName)).
+			WithLabels(map[string]string{
+				"kuma.io/mesh":   mesh.MeshName,
+				"kuma.io/env":    "universal",
+				"kuma.io/origin": "zone",
+				"kuma.io/zone":   "default",
+			}).
+			WithSpecHCL(tfbuilder.AllowAllTrafficPermissionSpec)
+		builder.AddMesh(mesh)
+
+		resource.Test(t, resource.TestCase{
+			ProtoV6ProviderFactories: providerFactory,
+			Steps: []resource.TestStep{
+				{
+					Config: builder.Build(),
+					ConfigPlanChecks: resource.ConfigPlanChecks{
+						PreApply: []plancheck.PlanCheck{
+							plancheck.ExpectResourceAction(builder.ResourceAddress("mesh", mesh.ResourceName), plancheck.ResourceActionCreate),
+						},
+					},
+				},
+				{
+					// Re-apply the same config and ensure no changes occur
+					Config: builder.Build(),
+					ConfigPlanChecks: resource.ConfigPlanChecks{
+						PreApply: []plancheck.PlanCheck{
+							plancheck.ExpectEmptyPlan(),
+						},
+					},
+				},
+				{
+					Config: builder.AddPolicy(mtp).Build(),
+					ConfigPlanChecks: resource.ConfigPlanChecks{
+						PreApply: []plancheck.PlanCheck{
+							plancheck.ExpectResourceAction(builder.ResourceAddress(mtp.ResourceType, mtp.ResourceName), plancheck.ResourceActionCreate),
+						},
+					},
+				},
+				{
+					// Re-apply the same config and ensure no changes occur
+					Config: builder.Build(),
 					ConfigPlanChecks: resource.ConfigPlanChecks{
 						PreApply: []plancheck.PlanCheck{
 							plancheck.ExpectEmptyPlan(),
@@ -73,18 +129,4 @@ func TestMesh(t *testing.T) {
 		require.NoError(t, err)
 		t.Logf("Container logs: %s", logContent)
 	}
-}
-
-func mesh(providerName, resourceName, meshName string) string {
-	return fmt.Sprintf(`resource "%s_mesh" "%s" {
-  type  = "Mesh"
-  name  = "%s"
-
-  skip_creating_initial_policies = [ "*" ]
-}
-`, providerName, resourceName, meshName)
-}
-
-func resourceAddress(providerName, resourceType, resourceName string) string {
-	return fmt.Sprintf("%s_%s.%s", providerName, resourceType, resourceName)
 }

@@ -11,10 +11,3 @@ var (
         "kong-mesh": providerserver.NewProtocol6WithError(provider.New("")()),
     }
 )
-
-func providerConfig(port string) string {
-    return `provider "kong-mesh" {
-  server_url = "http://localhost:` + port + `"
-}
-`
-}
