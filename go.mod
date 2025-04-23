@@ -5,6 +5,7 @@ go 1.24.1
 require (
 	github.com/Kong/shared-speakeasy/planmodifiers/arbitrary_json v0.0.1
 	github.com/Kong/shared-speakeasy/planmodifiers/suppress_zero_null v0.0.1
+	github.com/Kong/shared-speakeasy/tfbuilder v0.0.0-20250423074447-2b10b429db8a
 	github.com/ericlagergren/decimal v0.0.0-20221120152707-495c53812d05
 	github.com/hashicorp/go-uuid v1.0.3
 	github.com/hashicorp/terraform-plugin-docs v0.20.1
@@ -21,7 +22,6 @@ require (
 	dario.cat/mergo v1.0.1 // indirect
 	github.com/Azure/go-ansiterm v0.0.0-20210617225240-d185dfc1b5a1 // indirect
 	github.com/BurntSushi/toml v1.2.1 // indirect
-	github.com/Kong/shared-speakeasy/tfbuilder v0.0.0-20250422102251-87e929f3999a // indirect
 	github.com/Kunde21/markdownfmt/v3 v3.1.0 // indirect
 	github.com/Masterminds/goutils v1.1.1 // indirect
 	github.com/Masterminds/semver/v3 v3.2.0 // indirect

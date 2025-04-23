@@ -11,6 +11,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/kong/terraform-provider-kong-mesh/internal/sdk"
 	"net/http"
+	"os"
 )
 
 var _ provider.Provider = &KongMeshProvider{}
@@ -55,6 +56,9 @@ func (p *KongMeshProvider) Configure(ctx context.Context, req provider.Configure
 
 	ServerURL := data.ServerURL.ValueString()
 
+	if ServerURL == "" && len(os.Getenv("SERVER_URL")) > 0 {
+		ServerURL = os.Getenv("SERVER_URL")
+	}
 	if ServerURL == "" {
 		resp.Diagnostics.AddError("server_url is required", "The server_url attribute must be provided in the provider configuration.")
 		return
