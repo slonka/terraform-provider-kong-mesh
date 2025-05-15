@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.4
+> Released on 2025/05/15
+> 
+> - bump speakeasy version to 1.545.0
+
 ## 0.1.3
 > Released on 2025/04/29
 > 
