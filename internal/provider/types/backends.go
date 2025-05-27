@@ -2,11 +2,13 @@
 
 package types
 
-import "github.com/hashicorp/terraform-plugin-framework/types"
+import (
+	"github.com/hashicorp/terraform-plugin-framework/types"
+)
 
 type Backends struct {
-	Conf   *MeshItemLoggingConf `tfsdk:"conf"`
-	Format types.String         `tfsdk:"format"`
-	Name   types.String         `tfsdk:"name"`
-	Type   types.String         `tfsdk:"type"`
+	Conf   *MeshItemConf `tfsdk:"conf"`
+	Format types.String  `tfsdk:"format"`
+	Name   types.String  `tfsdk:"name"`
+	Type   types.String  `tfsdk:"type"`
 }

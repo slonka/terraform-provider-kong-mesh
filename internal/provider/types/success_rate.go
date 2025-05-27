@@ -2,10 +2,12 @@
 
 package types
 
-import "github.com/hashicorp/terraform-plugin-framework/types"
+import (
+	"github.com/hashicorp/terraform-plugin-framework/types"
+)
 
 type SuccessRate struct {
 	MinimumHosts            types.Int32 `tfsdk:"minimum_hosts"`
 	RequestVolume           types.Int32 `tfsdk:"request_volume"`
-	StandardDeviationFactor *Mode       `tfsdk:"standard_deviation_factor"`
+	StandardDeviationFactor *ConfMode   `tfsdk:"standard_deviation_factor"`
 }

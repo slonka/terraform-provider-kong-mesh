@@ -2,9 +2,12 @@
 
 package types
 
-import "github.com/hashicorp/terraform-plugin-framework/types"
+import (
+	"github.com/hashicorp/terraform-plugin-framework/types"
+)
 
 type Metrics struct {
-	Backends       []MeshItemBackends `tfsdk:"backends"`
-	EnabledBackend types.String       `tfsdk:"enabled_backend"`
+	Conf *DataplaneItemConf `tfsdk:"conf"`
+	Name types.String       `tfsdk:"name"`
+	Type types.String       `tfsdk:"type"`
 }

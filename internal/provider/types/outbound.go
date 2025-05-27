@@ -2,8 +2,13 @@
 
 package types
 
-import "github.com/hashicorp/terraform-plugin-framework/types"
+import (
+	"github.com/hashicorp/terraform-plugin-framework/types"
+)
 
 type Outbound struct {
-	Passthrough types.Bool `tfsdk:"passthrough"`
+	Address    types.String            `tfsdk:"address"`
+	BackendRef *BackendRef             `tfsdk:"backend_ref"`
+	Port       types.Int64             `tfsdk:"port"`
+	Tags       map[string]types.String `tfsdk:"tags"`
 }

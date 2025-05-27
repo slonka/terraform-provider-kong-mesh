@@ -2,14 +2,16 @@
 
 package types
 
-import "github.com/hashicorp/terraform-plugin-framework/types"
+import (
+	"github.com/hashicorp/terraform-plugin-framework/types"
+)
 
 type MeshHealthCheckItemDefault struct {
 	AlwaysLogHealthCheckFailures types.Bool               `tfsdk:"always_log_health_check_failures"`
 	EventLogPath                 types.String             `tfsdk:"event_log_path"`
 	FailTrafficOnPanic           types.Bool               `tfsdk:"fail_traffic_on_panic"`
 	Grpc                         *Grpc                    `tfsdk:"grpc"`
-	HealthyPanicThreshold        *Mode                    `tfsdk:"healthy_panic_threshold"`
+	HealthyPanicThreshold        *ConfMode                `tfsdk:"healthy_panic_threshold"`
 	HealthyThreshold             types.Int32              `tfsdk:"healthy_threshold"`
 	HTTP                         *MeshHealthCheckItemHTTP `tfsdk:"http"`
 	InitialJitter                types.String             `tfsdk:"initial_jitter"`

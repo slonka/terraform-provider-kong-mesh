@@ -2,13 +2,15 @@
 
 package types
 
-import "github.com/hashicorp/terraform-plugin-framework/types"
+import (
+	"github.com/hashicorp/terraform-plugin-framework/types"
+)
 
 type LoadBalancer struct {
-	LeastRequest *LeastRequest `tfsdk:"least_request"`
-	Maglev       *Maglev       `tfsdk:"maglev"`
-	Random       *OptionsObj   `tfsdk:"random"`
-	RingHash     *RingHash     `tfsdk:"ring_hash"`
-	RoundRobin   *OptionsObj   `tfsdk:"round_robin"`
-	Type         types.String  `tfsdk:"type"`
+	LeastRequest *LeastRequest     `tfsdk:"least_request"`
+	Maglev       *Maglev           `tfsdk:"maglev"`
+	Random       *DataplaneItemTCP `tfsdk:"random"`
+	RingHash     *RingHash         `tfsdk:"ring_hash"`
+	RoundRobin   *DataplaneItemTCP `tfsdk:"round_robin"`
+	Type         types.String      `tfsdk:"type"`
 }

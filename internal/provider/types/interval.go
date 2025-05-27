@@ -2,9 +2,11 @@
 
 package types
 
-import "github.com/hashicorp/terraform-plugin-framework/types"
+import (
+	"github.com/hashicorp/terraform-plugin-framework/types"
+)
 
-type RequestTimeout struct {
+type Interval struct {
 	Nanos   types.Int64 `tfsdk:"nanos"`
 	Seconds types.Int64 `tfsdk:"seconds"`
 }

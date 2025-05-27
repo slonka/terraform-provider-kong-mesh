@@ -2,11 +2,13 @@
 
 package types
 
-import "github.com/hashicorp/terraform-plugin-framework/types"
+import (
+	"github.com/hashicorp/terraform-plugin-framework/types"
+)
 
 type TLS struct {
-	AllowRenegotiation types.Bool    `tfsdk:"allow_renegotiation"`
-	Enabled            types.Bool    `tfsdk:"enabled"`
-	Verification       *Verification `tfsdk:"verification"`
-	Version            *Version      `tfsdk:"version"`
+	AllowRenegotiation types.Bool                      `tfsdk:"allow_renegotiation"`
+	Enabled            types.Bool                      `tfsdk:"enabled"`
+	Verification       *Verification                   `tfsdk:"verification"`
+	Version            *MeshExternalServiceItemVersion `tfsdk:"version"`
 }

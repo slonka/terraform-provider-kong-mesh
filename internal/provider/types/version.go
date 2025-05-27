@@ -2,9 +2,12 @@
 
 package types
 
-import "github.com/hashicorp/terraform-plugin-framework/types"
+import (
+	"github.com/hashicorp/terraform-plugin-framework/types"
+)
 
 type Version struct {
-	Max types.String `tfsdk:"max"`
-	Min types.String `tfsdk:"min"`
+	Dependencies map[string]types.String `tfsdk:"dependencies"`
+	Envoy        *Envoy                  `tfsdk:"envoy"`
+	KumaDp       *KumaDp                 `tfsdk:"kuma_dp"`
 }

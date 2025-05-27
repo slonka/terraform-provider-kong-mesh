@@ -2,17 +2,19 @@
 
 package types
 
-import "github.com/hashicorp/terraform-plugin-framework/types"
+import (
+	"github.com/hashicorp/terraform-plugin-framework/types"
+)
 
 type MeshItem struct {
 	Constraints                 *Constraints            `tfsdk:"constraints"`
 	Labels                      map[string]types.String `tfsdk:"labels"`
 	Logging                     *Logging                `tfsdk:"logging"`
-	MeshServices                *MeshServices           `tfsdk:"mesh_services"`
-	Metrics                     *Metrics                `tfsdk:"metrics"`
+	MeshServices                *ConfTLS                `tfsdk:"mesh_services"`
+	Metrics                     *MeshItemMetrics        `tfsdk:"metrics"`
 	Mtls                        *Mtls                   `tfsdk:"mtls"`
 	Name                        types.String            `tfsdk:"name"`
-	Networking                  *Networking             `tfsdk:"networking"`
+	Networking                  *MeshItemNetworking     `tfsdk:"networking"`
 	Routing                     *Routing                `tfsdk:"routing"`
 	SkipCreatingInitialPolicies []types.String          `tfsdk:"skip_creating_initial_policies"`
 	Tracing                     *Tracing                `tfsdk:"tracing"`

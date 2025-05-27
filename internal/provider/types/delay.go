@@ -2,9 +2,11 @@
 
 package types
 
-import "github.com/hashicorp/terraform-plugin-framework/types"
+import (
+	"github.com/hashicorp/terraform-plugin-framework/types"
+)
 
 type Delay struct {
-	Percentage Mode         `tfsdk:"percentage"`
+	Percentage ConfMode     `tfsdk:"percentage"`
 	Value      types.String `tfsdk:"value"`
 }

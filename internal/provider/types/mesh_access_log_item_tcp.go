@@ -2,9 +2,11 @@
 
 package types
 
-import "github.com/hashicorp/terraform-plugin-framework/types"
+import (
+	"github.com/hashicorp/terraform-plugin-framework/types"
+)
 
-type MeshAccessLogItemSpecFromTCP struct {
+type MeshAccessLogItemTCP struct {
 	Address types.String `tfsdk:"address"`
 	Format  *Format      `tfsdk:"format"`
 }
