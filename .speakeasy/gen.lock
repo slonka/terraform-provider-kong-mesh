@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 322c4806-8b53-493c-a05f-50d4d113c747
 management:
-  docChecksum: 2aed52df07887506e7dbabcf82555cf3
+  docChecksum: a1c39f3bb422e4440a3d5e954c32d216
   docVersion: 2.0.0
-  speakeasyVersion: 1.551.0
-  generationVersion: 2.610.0
-  releaseVersion: 0.5.0
-  configChecksum: fb4df8b014d33267653d1c203f051ec0
+  speakeasyVersion: 1.555.3
+  generationVersion: 2.620.2
+  releaseVersion: 0.5.1
+  configChecksum: 2f0daf53ded57efc6ed68114e07a0808
 features:
   terraform:
     additionalDependencies: 0.1.0
@@ -16,6 +16,7 @@ features:
     globalServerURLs: 2.82.2
     inputOutputModels: 2.83.0
     nullables: 0.0.0
+    retries: 2.81.3
     unions: 2.81.17
 generatedFiles:
   - .gitattributes
@@ -293,7 +294,7 @@ generatedFiles:
   - internal/provider/reflect/struct.go
   - internal/provider/typeconvert/date.go
   - internal/provider/typeconvert/datetime.go
-  - internal/provider/typeconvert/int32.go
+  - internal/provider/typeconvert/int.go
   - internal/provider/types/abort.go
   - internal/provider/types/access_key.go
   - internal/provider/types/acm_certificate_authority_config.go
@@ -552,9 +553,11 @@ generatedFiles:
   - internal/provider/utils.go
   - internal/sdk/.gitattributes
   - internal/sdk/dataplane.go
+  - internal/sdk/docs/models/operations/option.md
   - internal/sdk/globalinsight.go
   - internal/sdk/hostnamegenerator.go
   - internal/sdk/inspect.go
+  - internal/sdk/internal/config/sdkconfiguration.go
   - internal/sdk/internal/hooks/hooks.go
   - internal/sdk/internal/utils/contenttype.go
   - internal/sdk/internal/utils/env.go
