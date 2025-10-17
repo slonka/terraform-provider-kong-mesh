@@ -19,6 +19,7 @@
   "rebaseWhen": "conflicted",
   "prTitleStrict": true,
   "vulnerabilityAlerts": { "commitMessageSuffix": "" },
+  "gitIgnoredAuthors": ["41898282+github-actions[bot]@users.noreply.github.com"],
   "customManagers": [
     {
       "description": "Manage Go module versions inside terraform.additionalDependencies in gen.yaml",
