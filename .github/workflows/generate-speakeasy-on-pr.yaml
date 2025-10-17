@@ -11,7 +11,9 @@ permissions:
 jobs:
   speakeasy-on-pr-open:
     name: Run Speakeasy on PR Open
-    if: ${{ github.event.pull_request.head.ref == 'feat/platform-api-automated-update' }}
+    if: github.event.pull_request.head.ref == 'feat/platform-api-automated-update' ||
+      github.actor == 'renovate[bot]' ||
+      github.actor == 'mend[bot]'
     runs-on: ubuntu-latest
     concurrency:
       group: speakeasy-${{ github.event.pull_request.number }}
