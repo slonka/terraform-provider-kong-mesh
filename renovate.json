@@ -34,6 +34,10 @@
   ],
   "packageRules": [
     {
+      "matchPackageNames": ["{github.com/,}[Kk]ong/shared-speakeasy/**"],
+      "minimumReleaseAge": "0"
+    },
+    {
       "description": [
         "Catch-all rule that applies the standard commit message format for all dependencies",
         "",
