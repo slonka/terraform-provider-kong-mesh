@@ -24,7 +24,7 @@
       "description": "Manage Go module versions inside terraform.additionalDependencies in gen.yaml",
       "customType": "jsonata",
       "fileFormat": "yaml",
-      "fileMatch": ["gen.yaml"],
+      "managerFilePatterns": ["/^gen\\.yaml$/"],
       "matchStrings": [
         "$each(terraform.additionalDependencies, function($v, $k) { {\"depName\":$k, \"currentValue\": $v}})"
       ],
