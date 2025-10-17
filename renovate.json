@@ -7,7 +7,7 @@
     ":disableRateLimiting",
     ":semanticCommitTypeAll(chore)",
     "docker:pinDigests",
-    "schedule:earlyMondays"
+    "schedule:daily"
   ],
   "enabledManagers": [
     "custom.jsonata",
@@ -30,9 +30,24 @@
         "$each(terraform.additionalDependencies, function($v, $k) { {\"depName\":$k, \"currentValue\": $v}})"
       ],
       "datasourceTemplate": "go"
+    },
+    {
+      "description": "Manage speakeasyVersion in .speakeasy/workflow.yaml",
+      "customType": "jsonata",
+      "fileFormat": "yaml",
+      "managerFilePatterns": ["/^\\.speakeasy/workflow\\.yaml$/"],
+      "matchStrings": [
+        "{ \"depName\": \"speakeasy-api/speakeasy\", \"currentValue\": speakeasyVersion }"
+      ],
+      "datasourceTemplate": "github-tags",
+      "extractVersionTemplate": "v(?<version>.*)"
     }
   ],
   "packageRules": [
+    {
+      "matchDepNames": ["speakeasy-api/speakeasy"],
+      "minimumReleaseAge": "24h"
+    },
     {
       "matchPackageNames": ["{github.com/,}[Kk]ong/shared-speakeasy/**"],
       "minimumReleaseAge": "0"
